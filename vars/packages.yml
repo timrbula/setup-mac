@@ -39,6 +39,8 @@ homebrew_packages:
   # Languages, Runtimes & Version Managers
   - uv
   - vite-plus
+  - rust
+  - go
 
   # Containers & Cloud Tools
   - awscli
