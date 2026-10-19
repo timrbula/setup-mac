@@ -1,0 +1,34 @@
+---
+# ==============================================================================
+# Starship Prompt Setup & Configuration
+# ==============================================================================
+
+- name: Ensure ~/.config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: '0755'
+  when: configure_starship | default(false) | bool
+  tags:
+    - starship
+
+- name: Deploy starship.toml configuration
+  ansible.builtin.template:
+    src: templates/starship.toml.j2
+    dest: "{{ ansible_env.HOME }}/.config/starship.toml"
+    mode: '0644'
+    force: false # Keep user's custom file if already customized
+  when: configure_starship | default(false) | bool
+  tags:
+    - starship
+
+- name: Ensure Starship prompt is initialized in ~/.zshrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    create: true
+    mode: '0644'
+    line: 'eval "$(starship init zsh)"'
+    state: present
+  when: configure_starship | default(false) | bool
+  tags:
+    - starship

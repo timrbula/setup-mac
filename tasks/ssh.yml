@@ -1,0 +1,27 @@
+---
+# ==============================================================================
+# SSH & 1Password SSH Agent Configuration
+# ==============================================================================
+
+- name: Ensure ~/.ssh directory exists with secure permissions
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: '0700'
+  tags:
+    - ssh
+    - 1password
+
+- name: Configure 1Password SSH Agent in ~/.ssh/config
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.ssh/config"
+    create: true
+    mode: '0600'
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: 1Password SSH Agent"
+    block: |
+      Host *
+          IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  when: configure_1password_ssh | default(false) | bool
+  tags:
+    - ssh
+    - 1password

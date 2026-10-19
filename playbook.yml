@@ -1,0 +1,57 @@
+---
+- name: macOS Workstation Setup
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars_files:
+    - vars/packages.yml
+
+  pre_tasks:
+    - name: Verify operating system is macOS
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['os_family'] == 'Darwin'
+        fail_msg: "This playbook is designed only for macOS systems."
+      tags:
+        - always
+
+  tasks:
+    - name: Configure and install Homebrew packages & casks
+      ansible.builtin.import_tasks: tasks/homebrew.yml
+      tags:
+        - homebrew
+        - packages
+        - apps
+
+    - name: Install Mac App Store applications
+      ansible.builtin.import_tasks: tasks/mas.yml
+      tags:
+        - mas
+        - apps
+
+    - name: Install Visual Studio Code extensions
+      ansible.builtin.import_tasks: tasks/vscode.yml
+      tags:
+        - vscode
+
+    - name: Clone and set up dotfiles
+      ansible.builtin.import_tasks: tasks/dotfiles.yml
+      tags:
+        - dotfiles
+
+    - name: Configure SSH and 1Password SSH Agent
+      ansible.builtin.import_tasks: tasks/ssh.yml
+      tags:
+        - ssh
+        - 1password
+
+    - name: Configure Starship Prompt
+      ansible.builtin.import_tasks: tasks/starship.yml
+      tags:
+        - starship
+
+    - name: Apply macOS preferences & settings
+      ansible.builtin.import_tasks: tasks/macos_settings.yml
+      tags:
+        - macos-settings

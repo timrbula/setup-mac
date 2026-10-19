@@ -1,0 +1,89 @@
+---
+# ==============================================================================
+# Package and Application Definitions for macOS Setup
+# ==============================================================================
+
+# Homebrew repository taps (add third-party taps here if needed)
+homebrew_taps: []
+
+# CLI tools and utilities (installed via `brew install <package>`)
+homebrew_packages:
+  # Shell & Terminal enhancements
+  - starship
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+  - fzf
+  - tmux
+
+  # Modern CLI utilities
+  - bat
+  - eza
+  - ripgrep
+  - fd
+  - jq
+  - yq
+  - tree
+  - htop
+  - curl
+  - wget
+
+  # Git and VCS
+  - git
+  - gh
+  - chezmoi
+
+  # Editors & Viewers
+  - neovim
+  - bruno
+
+  # Languages, Runtimes & Version Managers
+  - uv
+  - vite-plus
+
+  # Containers & Cloud Tools
+  - awscli
+
+  # Mac App Store CLI (required for installing mas_packages)
+  - mas
+
+# GUI Applications (installed via `brew install --cask <app>`)
+homebrew_cask_packages:
+  # Browsers
+  - google-chrome
+  - firefox
+
+  # Development & Terminals
+  - visual-studio-code
+  - ghostty
+  - orbstack
+  - ibm-cloud-cli
+
+  # Utilities & Media
+  - 1password
+  - 1password-cli
+  - spotify
+  - obsidian
+
+  # Fonts (IBM Plex Mono Nerd Font / BlexMono)
+  - font-blex-mono-nerd-font
+
+# Mac App Store Applications (Requires sign-in to the App Store)
+# Find IDs using `mas search "<app name>"`
+mas_packages:
+  # - id: 497799835
+  #   name: "Xcode"
+  # - id: 937984704
+  #   name: "Amphetamine"
+  # - id: 1475387142
+  #   name: "Tailscale"
+
+# Dotfiles (chezmoi) configuration
+dotfiles_use_chezmoi: true
+chezmoi_repo: "https://github.com/timrbula/dotfiles.git"
+chezmoi_branch: "main"
+
+# 1Password SSH Agent configuration
+configure_1password_ssh: true
+
+# Starship Prompt configuration
+configure_starship: true

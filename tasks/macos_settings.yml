@@ -1,0 +1,102 @@
+---
+# ==============================================================================
+# Sensible macOS System Defaults & UI Settings
+# ==============================================================================
+
+- name: Finder - Show file extensions
+  ansible.builtin.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+    state: present
+  tags:
+    - macos-settings
+    - finder
+
+- name: Finder - Show hidden files
+  ansible.builtin.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: bool
+    value: true
+    state: present
+  tags:
+    - macos-settings
+    - finder
+
+- name: Finder - Show status bar
+  ansible.builtin.osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+    state: present
+  tags:
+    - macos-settings
+    - finder
+
+- name: Finder - Show path bar
+  ansible.builtin.osx_defaults:
+    domain: com.apple.finder
+    key: ShowPathbar
+    type: bool
+    value: true
+    state: present
+  tags:
+    - macos-settings
+    - finder
+
+- name: Dock - Automatically hide and show the Dock
+  ansible.builtin.osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+    state: present
+  tags:
+    - macos-settings
+    - dock
+
+- name: Dock - Set icon size
+  ansible.builtin.osx_defaults:
+    domain: com.apple.dock
+    key: tilesize
+    type: int
+    value: 48
+    state: present
+  tags:
+    - macos-settings
+    - dock
+
+- name: Keyboard - Fast key repeat rate
+  ansible.builtin.osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 2
+    state: present
+  tags:
+    - macos-settings
+    - keyboard
+
+- name: Keyboard - Short initial key repeat delay
+  ansible.builtin.osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 15
+    state: present
+  tags:
+    - macos-settings
+    - keyboard
+
+- name: Restart affected UI services
+  ansible.builtin.command: "killall {{ item }}"
+  loop:
+    - Finder
+    - Dock
+  failed_when: false
+  changed_when: false
+  tags:
+    - macos-settings

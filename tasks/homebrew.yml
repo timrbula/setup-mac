@@ -1,0 +1,33 @@
+---
+- name: Ensure Homebrew taps are configured
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_taps | default([]) }}"
+  when: homebrew_taps is defined and (homebrew_taps | length > 0)
+  tags:
+    - homebrew
+    - taps
+
+- name: Install Homebrew CLI packages
+  community.general.homebrew:
+    name: "{{ homebrew_packages }}"
+    state: present
+    update_homebrew: true
+  when: homebrew_packages is defined and (homebrew_packages | length > 0)
+  tags:
+    - homebrew
+    - packages
+    - cli
+
+- name: Install Homebrew GUI applications (Casks)
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    accept_external_apps: true
+  loop: "{{ homebrew_cask_packages | default([]) }}"
+  when: homebrew_cask_packages is defined and (homebrew_cask_packages | length > 0)
+  tags:
+    - homebrew
+    - casks
+    - apps
