@@ -58,7 +58,10 @@ homebrew_cask_packages:
   - visual-studio-code
   - ghostty
   - orbstack
+
+  # Cloud CLIs & SDKs
   - ibm-cloud-cli
+  - google-cloud-sdk
 
   # Utilities & Media
   - 1password
