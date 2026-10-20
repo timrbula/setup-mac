@@ -31,7 +31,6 @@ homebrew_packages:
   # Git and VCS
   - git
   - gh
-  - chezmoi
 
   # Editors & Viewers
   - neovim
@@ -70,10 +69,11 @@ homebrew_cask_packages:
   # Fonts (IBM Plex Mono Nerd Font / BlexMono)
   - font-blex-mono-nerd-font
 
-# Dotfiles (chezmoi) configuration
-dotfiles_use_chezmoi: true
-chezmoi_repo: "https://github.com/timrbula/dotfiles.git"
-chezmoi_branch: "main"
+# Dotfiles configuration
+dotfiles_use_chezmoi: false
+dotfiles_repo: "https://github.com/timrbula/dotfiles.git"
+dotfiles_dest: "{{ ansible_facts['env']['HOME'] }}/dotfiles"
+dotfiles_branch: "main"
 
 # 1Password SSH Agent configuration
 configure_1password_ssh: true
