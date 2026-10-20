@@ -1,6 +1,6 @@
 # macOS Setup Automation with Ansible
 
-Automated setup and configuration for a fresh macOS installation using Ansible and Homebrew. Designed to get a new Mac provisioned with CLI utilities, GUI applications, Mac App Store apps, development extensions, and system configurations with minimal manual intervention.
+Automated setup and configuration for a fresh macOS installation using Ansible and Homebrew. Designed to get a new Mac provisioned with CLI utilities, GUI applications, development extensions, and system configurations with minimal manual intervention.
 
 ---
 
@@ -9,7 +9,6 @@ Automated setup and configuration for a fresh macOS installation using Ansible a
 - **Automated Bootstrapping**: One-step script (`bootstrap.sh`) handles Xcode Command Line Tools, Homebrew, Python/Ansible, and Ansible Galaxy collections.
 - **Package & App Management**:
   - **Homebrew CLI Packages**: Shell tools, developer runtimes, utilities (`bat`, `ripgrep`, `git`, `node`, `python`, etc.).  - **Homebrew Casks (GUI Apps)**: Browsers, terminals, IDEs, productivity tools (`Visual Studio Code`, `Ghostty`, `OrbStack`, `Obsidian`, `Bruno`, etc.).
-  - **Mac App Store (MAS)**: Automated installation of App Store applications.
   - **Dotfiles Integration (chezmoi)**: Automatically installs chezmoi, initializes and applies your dotfiles repo.
   - **VS Code Extensions**: Automated extension installation.
 - **Modular & Tagged**: Execute all tasks or selectively run components using Ansible tags (e.g. `--tags packages`, `--tags apps`, `--tags dotfiles`, `--tags vscode`).
@@ -27,10 +26,9 @@ Automated setup and configuration for a fresh macOS installation using Ansible a
 ├── requirements.yml        # Ansible Galaxy collections (community.general)
 ├── playbook.yml            # Main playbook orchestrating setup
 ├── vars/
-│   └── packages.yml        # List of formulas, casks, MAS apps, and extensions
+│   └── packages.yml        # List of formulas, casks, and extensions
 └── tasks/
     ├── homebrew.yml        # Homebrew taps, CLI packages, and casks
-    ├── mas.yml             # Mac App Store apps
     ├── dotfiles.yml        # chezmoi dotfile initialization & updates
     ├── ssh.yml             # Configures ~/.ssh/config and 1Password SSH Agent
     ├── vscode.yml          # Visual Studio Code extensions
@@ -131,10 +129,3 @@ Search for software available on Homebrew:
 ```bash
 brew search <app_name>
 ```
-
-### Mac App Store Apps
-Search for App Store IDs using the `mas` CLI tool:
-```bash
-mas search "<app_name>"
-```
-*Note: You must be logged into the Mac App Store with your Apple ID for `mas` to install applications.*

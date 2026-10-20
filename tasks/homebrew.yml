@@ -24,7 +24,7 @@
   community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
-    accept_external_apps: true
+    install_options: adopt
   loop: "{{ homebrew_cask_packages | default([]) }}"
   when: homebrew_cask_packages is defined and (homebrew_cask_packages | length > 0)
   tags:

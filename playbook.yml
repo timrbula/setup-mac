@@ -24,17 +24,6 @@
         - packages
         - apps
 
-    - name: Install Mac App Store applications
-      ansible.builtin.import_tasks: tasks/mas.yml
-      tags:
-        - mas
-        - apps
-
-    - name: Install Visual Studio Code extensions
-      ansible.builtin.import_tasks: tasks/vscode.yml
-      tags:
-        - vscode
-
     - name: Clone and set up dotfiles
       ansible.builtin.import_tasks: tasks/dotfiles.yml
       tags:
