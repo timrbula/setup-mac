@@ -9,7 +9,7 @@ Automated setup and configuration for a fresh macOS installation using Ansible a
 - **Automated Bootstrapping**: One-step script (`bootstrap.sh`) handles Xcode Command Line Tools, Homebrew, Python/Ansible, and Ansible Galaxy collections.
 - **Package & App Management**:
   - **Homebrew CLI Packages**: Shell tools, developer runtimes, utilities (`bat`, `ripgrep`, `git`, `node`, `python`, etc.).  - **Homebrew Casks (GUI Apps)**: Browsers, terminals, IDEs, productivity tools (`Visual Studio Code`, `Ghostty`, `OrbStack`, `Obsidian`, `Bruno`, etc.).
-  - **Dotfiles Integration (chezmoi)**: Automatically installs chezmoi, initializes and applies your dotfiles repo.
+  - **Dotfiles Integration**: Clones your dotfiles repo and runs the install script to symlink files into `$HOME`.
   - **VS Code Extensions**: Automated extension installation.
 - **Modular & Tagged**: Execute all tasks or selectively run components using Ansible tags (e.g. `--tags packages`, `--tags apps`, `--tags dotfiles`, `--tags vscode`).
 - **macOS System Tweaks (Optional)**: Sensible UI defaults for Finder, Dock, and keyboard repeat rates.
@@ -29,7 +29,7 @@ Automated setup and configuration for a fresh macOS installation using Ansible a
 │   └── packages.yml        # List of formulas, casks, and extensions
 └── tasks/
     ├── homebrew.yml        # Homebrew taps, CLI packages, and casks
-    ├── dotfiles.yml        # chezmoi dotfile initialization & updates
+    ├── dotfiles.yml        # Dotfile repo clone & install script execution
     ├── ssh.yml             # Configures ~/.ssh/config and 1Password SSH Agent
     ├── vscode.yml          # Visual Studio Code extensions
     └── macos_settings.yml  # macOS system and UI preferences

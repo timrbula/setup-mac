@@ -1,63 +1,16 @@
 ---
 # ==============================================================================
-# Dotfiles Setup & Synchronization (chezmoi / git)
+# Dotfiles Setup & Synchronization
 # ==============================================================================
 
-- name: Check if chezmoi is installed
-  ansible.builtin.command: which chezmoi
-  register: chezmoi_installed
-  failed_when: false
-  changed_when: false
-  when: dotfiles_use_chezmoi | default(false) | bool
-  tags:
-    - dotfiles
-    - chezmoi
-
-- name: Check if chezmoi is already initialized
-  ansible.builtin.stat:
-    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/chezmoi"
-  register: chezmoi_dir
-  when:
-    - dotfiles_use_chezmoi | default(false) | bool
-    - chezmoi_installed.rc == 0
-  tags:
-    - dotfiles
-    - chezmoi
-
-- name: Initialize and apply dotfiles with chezmoi
-  ansible.builtin.command:
-    cmd: "chezmoi init --apply {{ chezmoi_repo }} --branch {{ chezmoi_branch | default('main') }}"
-  when:
-    - dotfiles_use_chezmoi | default(false) | bool
-    - chezmoi_installed.rc == 0
-    - chezmoi_repo is defined and (chezmoi_repo | length > 0)
-    - not chezmoi_dir.stat.exists
-  tags:
-    - dotfiles
-    - chezmoi
-
-- name: Update and apply existing chezmoi dotfiles
-  ansible.builtin.command:
-    cmd: "chezmoi update"
-  when:
-    - dotfiles_use_chezmoi | default(false) | bool
-    - chezmoi_installed.rc == 0
-    - chezmoi_dir.stat.exists
-  tags:
-    - dotfiles
-    - chezmoi
-
-# Fallback / Traditional git-based dotfiles
-- name: Ensure dotfiles repository is cloned and up to date (Git fallback)
+- name: Ensure dotfiles repository is cloned and up to date
   ansible.builtin.git:
     repo: "{{ dotfiles_repo }}"
     dest: "{{ dotfiles_dest }}"
     version: "{{ dotfiles_branch | default('main') }}"
     update: true
     accept_hostkey: true
-  when:
-    - not (dotfiles_use_chezmoi | default(false) | bool)
-    - dotfiles_repo is defined and (dotfiles_repo | length > 0)
+  when: dotfiles_repo is defined and (dotfiles_repo | length > 0)
   tags:
     - dotfiles
 
@@ -69,9 +22,7 @@
     - "setup.sh"
     - "bootstrap.sh"
   register: dotfiles_scripts
-  when:
-    - not (dotfiles_use_chezmoi | default(false) | bool)
-    - dotfiles_repo is defined and (dotfiles_repo | length > 0)
+  when: dotfiles_repo is defined and (dotfiles_repo | length > 0)
   tags:
     - dotfiles
 
@@ -81,7 +32,6 @@
     chdir: "{{ dotfiles_dest }}"
   loop: "{{ dotfiles_scripts.results | default([]) }}"
   when:
-    - not (dotfiles_use_chezmoi | default(false) | bool)
     - item.stat is defined
     - item.stat.exists
   tags:

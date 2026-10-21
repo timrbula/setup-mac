@@ -40,6 +40,11 @@
       tags:
         - starship
 
+    - name: Set up Vim with amix/vimrc runtime
+      ansible.builtin.import_tasks: tasks/vim.yml
+      tags:
+        - vim
+
     - name: Apply macOS preferences & settings
       ansible.builtin.import_tasks: tasks/macos_settings.yml
       tags:

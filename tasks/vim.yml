@@ -1,0 +1,30 @@
+---
+# ==============================================================================
+# Vim Setup (amix/vimrc runtime)
+# ==============================================================================
+
+
+- name: Initialise and update amix/vimrc submodule in dotfiles
+  ansible.builtin.command:
+    cmd: git submodule update --init --depth 1 .vim_runtime
+    chdir: "{{ dotfiles_dest }}"
+  register: vim_submodule
+  changed_when: vim_submodule.stdout != ''
+  tags:
+    - vim
+
+- name: Symlink ~/.vim_runtime to dotfiles/.vim_runtime
+  ansible.builtin.file:
+    src: "{{ dotfiles_dest }}/.vim_runtime"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.vim_runtime"
+    state: link
+    force: true
+  tags:
+    - vim
+
+- name: Install amix/vimrc .vimrc
+  ansible.builtin.shell:
+    cmd: python3 "{{ dotfiles_dest }}/.vim_runtime/install_awesome_vimrc.py"
+    creates: "{{ ansible_facts['env']['HOME'] }}/.vimrc"
+  tags:
+    - vim
