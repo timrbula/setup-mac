@@ -44,8 +44,8 @@ Automated setup and configuration for a fresh macOS installation using Ansible a
 Open Terminal and clone this repository:
 
 ```bash
-git clone <your-repo-url> ~/setup-mac
-cd ~/setup-mac
+git clone [setup-mac](https://github.com/timrbula/setup-mac)
+cd setup-mac
 ```
 
 ### 2. Customize your packages
