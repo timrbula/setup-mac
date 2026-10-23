@@ -94,7 +94,22 @@ install_galaxy_requirements() {
     fi
 }
 
-# 5. Run Ansible Playbook
+# 5. Cache sudo credentials (needed by cask .pkg installers, e.g. ibm-cloud-cli)
+cache_sudo() {
+    log_info "Requesting sudo access (needed for some cask installers)..."
+    sudo -v
+
+    # Refresh the sudo timestamp until this script exits
+    while true; do
+        sudo -n true
+        sleep 60
+        kill -0 "$$" 2>/dev/null || exit
+    done &>/dev/null &
+    SUDO_KEEPALIVE_PID=$!
+    trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
+}
+
+# 6. Run Ansible Playbook
 run_playbook() {
     log_info "Running Ansible Playbook..."
     ansible-playbook playbook.yml "$@"
@@ -109,6 +124,8 @@ main() {
     install_homebrew
     install_ansible
     install_galaxy_requirements
+
+    cache_sudo
 
     log_info "Starting playbook execution..."
     run_playbook "$@"

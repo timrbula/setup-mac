@@ -44,6 +44,7 @@ homebrew_packages:
 
   # Containers & Cloud Tools
   - awscli
+  - hf
 
 # GUI Applications (installed via `brew install --cask <app>`)
 homebrew_cask_packages:
@@ -52,9 +53,10 @@ homebrew_cask_packages:
   - firefox
 
   # Development & Terminals
-  - visual-studio-code
   - ghostty
   - orbstack
+  - visual-studio-code
+  - visual-studio-code@insiders
 
   # Cloud CLIs & SDKs
   - ibm-cloud-cli

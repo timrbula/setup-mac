@@ -62,7 +62,7 @@
   ansible.builtin.osx_defaults:
     domain: com.apple.dock
     key: tilesize
-    type: int
+    type: float
     value: 48
     state: present
   tags:
