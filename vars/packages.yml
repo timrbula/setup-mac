@@ -57,6 +57,7 @@ homebrew_cask_packages:
   - orbstack
   - visual-studio-code
   - visual-studio-code@insiders
+  - lm-studio
 
   # Cloud CLIs & SDKs
   - ibm-cloud-cli
